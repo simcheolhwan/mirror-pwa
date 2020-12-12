@@ -1,13 +1,9 @@
-import routes from "../routes"
 import Container from "../components/Container"
 import { SettingsProvider, useSettingsState } from "../hooks/useSettings"
 import { WalletProvider, useWalletState } from "../hooks/useWallet"
 import { ContractProvider, useContractState } from "../hooks/useContract"
 import { StatsProvider, useStatsState } from "../statistics/useStats"
-import MobileAlert from "./MobileAlert"
-import Airdrop from "./Airdrop"
-import Header from "./Header"
-import Footer from "./Footer"
+import routes from "../pwa/routes"
 import "./App.scss"
 
 const App = () => {
@@ -21,13 +17,7 @@ const App = () => {
       <WalletProvider value={wallet} key={wallet.address}>
         <ContractProvider value={contract}>
           <StatsProvider value={stats}>
-            <Header />
-            <Container>
-              <MobileAlert />
-              {routes()}
-            </Container>
-            <Footer />
-            <Airdrop />
+            <Container>{routes}</Container>
           </StatsProvider>
         </ContractProvider>
       </WalletProvider>
