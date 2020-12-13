@@ -1,0 +1,6 @@
+@import "mixins";
+
+.loading {
+  @include transition(opacity);
+  opacity: 0.8;
+}
