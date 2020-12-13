@@ -10,7 +10,7 @@ const Refresh = ({ loading }: { loading: boolean }) => {
     <FixedBottom>
       <div className={styles.container}>
         <button className={styles.button} onClick={refresh} disabled={loading}>
-          <Icon name="refresh" />
+          <Icon name="refresh" size="2rem" />
         </button>
       </div>
     </FixedBottom>
