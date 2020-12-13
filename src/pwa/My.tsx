@@ -1,14 +1,14 @@
 import { gt } from "../libs/math"
-import { useContract, useWallet } from "../hooks"
+import { useWallet } from "../hooks"
 import Page from "../components/Page"
 import useMy from "../pages/My/useMy"
 import Num from "./Num"
 import Connect from "./Connect"
+import Refresh from "./Refresh"
 
 const My = () => {
   const { address } = useWallet()
-  const { uusd } = useContract()
-  const { holdings, mint, pool, stake, total } = useMy()
+  const { loading, uusd, holdings, mint, pool, stake, total } = useMy()
 
   const contents = [
     { title: "UST", children: uusd },
@@ -44,6 +44,8 @@ const My = () => {
             </Num>
           )
       )}
+
+      <Refresh loading={loading} />
     </Page>
   )
 }

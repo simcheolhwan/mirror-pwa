@@ -1,13 +1,20 @@
 import { useState } from "react"
+import createContext from "../hooks/createContext"
 import My from "./My"
+
+interface PWA {
+  refresh: () => void
+}
+
+export const [usePWA, PWAProvider] = createContext<PWA>("usePWA")
 
 const Home = () => {
   const [key, setKey] = useState(0)
 
   return (
-    <div onClick={() => setKey(key + 1)}>
+    <PWAProvider value={{ refresh: () => setKey((k) => k + 1) }}>
       <My key={key} />
-    </div>
+    </PWAProvider>
   )
 }
 

@@ -21,7 +21,7 @@ const useMy = () => {
     )
   )
 
-  const { data } = useRefetch([...keys, AccountInfoKey.UUSD])
+  const { loading, data } = useRefetch([...keys, AccountInfoKey.UUSD])
 
   /* total */
   const { uusd } = useContract()
@@ -37,7 +37,7 @@ const useMy = () => {
 
   const total = { value: calcTotalValue(values), loading: !data }
 
-  return { holdings, mint, pool, stake, total }
+  return { loading, uusd, holdings, mint, pool, stake, total }
 }
 
 export default useMy
