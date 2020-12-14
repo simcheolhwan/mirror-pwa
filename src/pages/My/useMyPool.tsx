@@ -34,6 +34,7 @@ const useMyPool = () => {
 
           return {
             ...item,
+            price: find(priceKey, token),
             balance,
             withdrawable: fromLP,
             share: prefix + percent(lessThanMinimum ? minimum : ratio),

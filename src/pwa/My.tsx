@@ -1,10 +1,11 @@
+import { useEffect } from "react"
 import classNames from "classnames/bind"
+import { startOfHour } from "date-fns"
 import { gt } from "../libs/math"
 import { useWallet } from "../hooks"
 import Page from "../components/Page"
 import useMy from "../pages/My/useMy"
 import Num from "./Num"
-import Connect from "./Connect"
 import Refresh from "./Refresh"
 import Bottom from "./Bottom"
 import styles from "./My.module.scss"
@@ -13,7 +14,16 @@ const cx = classNames.bind(styles)
 
 const My = () => {
   const { address } = useWallet()
-  const { loading, uusd, holdings, mint, pool, stake, total } = useMy()
+  const my = useMy()
+  const { loading, uusd, holdings, mint, pool, stake, total } = my
+
+  /* store data on local storage for chart */
+  useEffect(() => {
+    !my.loading && !my.total.loading && setLocal(my)
+  }, [my])
+
+  /* render */
+  const chartAvailable = Object.keys(getLocal()).length > 1
 
   const contents = [
     { title: "UST", children: uusd },
@@ -52,8 +62,15 @@ const My = () => {
         </Page>
       )}
 
-      <Bottom>
-        {!address && <Connect />}
+      <Bottom
+        link={
+          !address
+            ? { to: "/auth", children: "Connect" }
+            : chartAvailable
+            ? { to: "/chart", children: "Chart" }
+            : undefined
+        }
+      >
         <Refresh loading={loading} />
       </Bottom>
     </div>
@@ -61,3 +78,16 @@ const My = () => {
 }
 
 export default My
+
+/* local storage */
+export const getLocal = () => {
+  const stored = localStorage.getItem("my")
+  return stored ? JSON.parse(stored) : {}
+}
+
+export const setLocal = (data: any) => {
+  const stored = getLocal()
+  const timestamp = startOfHour(new Date()).getTime()
+  const next = JSON.stringify({ ...stored, [timestamp]: data })
+  localStorage.setItem("my", next)
+}
