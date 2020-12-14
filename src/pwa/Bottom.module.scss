@@ -1,5 +1,20 @@
 @import "mixins";
 
+.connect {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  @include desktop {
+    height: $footer-height;
+  }
+
+  @include mobile {
+    height: $footer-height-mobile;
+  }
+}
+
 .wrapper {
   @include flex(flex-end);
 }

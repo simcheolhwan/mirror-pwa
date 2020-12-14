@@ -2,9 +2,11 @@ import { Dictionary } from "ramda"
 import { UUSD } from "../constants"
 import { lookup } from "../libs/parse"
 import getLpName from "../libs/getLpName"
+import Page from "../components/Page"
 import Container from "../components/Container"
 import ChartContainer from "../containers/ChartContainer"
 import { getLocal } from "./My"
+import styles from "./Chart.module.scss"
 
 interface Item {
   total: { value: string }
@@ -31,30 +33,33 @@ const Chart = () => {
   }))
 
   return (
-    <Container sm>
-      <article>
-        <h1>Total Value</h1>
-        <ChartContainer
-          datasets={Object.entries(data).map(([t, { total }]) => ({
-            t: Number(t),
-            y: lookup(total.value, UUSD, { integer: true }),
-          }))}
-          fmt={FMT}
-          compact
-        />
-      </article>
+    <Page>
+      <Container sm>
+        <article>
+          <h1 className={styles.title}>Total Value</h1>
+          <ChartContainer
+            datasets={Object.entries(data).map(([t, { total }]) => ({
+              t: Number(t),
+              y: lookup(total.value, UUSD, { integer: true }),
+            }))}
+            fmt={FMT}
+            compact
+          />
+        </article>
 
-      <hr />
+        <hr />
 
-      <article>
-        {withdrawable.map(({ symbol, datasets }) => (
-          <section key={symbol}>
-            <h1>Withdrawable {getLpName(symbol)}</h1>
-            <ChartContainer datasets={datasets} fmt={FMT} compact />
-          </section>
-        ))}
-      </article>
-    </Container>
+        <article>
+          <h1 className={styles.title}>Withdrawable</h1>
+          {withdrawable.map(({ symbol, datasets }) => (
+            <section key={symbol}>
+              <h2>{getLpName(symbol)}</h2>
+              <ChartContainer datasets={datasets} fmt={FMT} compact />
+            </section>
+          ))}
+        </article>
+      </Container>
+    </Page>
   )
 }
 
