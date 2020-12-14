@@ -1,11 +1,6 @@
 @import "mixins";
 
-.container {
-  @include flex(flex-end);
-}
-
 .button {
   @include flex;
-  margin: -10px;
   padding: 10px;
 }

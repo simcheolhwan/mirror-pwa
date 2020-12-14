@@ -1,4 +1,4 @@
-import classNames from 'classnames/bind'
+import classNames from "classnames/bind"
 import { gt } from "../libs/math"
 import { useWallet } from "../hooks"
 import Page from "../components/Page"
@@ -6,7 +6,8 @@ import useMy from "../pages/My/useMy"
 import Num from "./Num"
 import Connect from "./Connect"
 import Refresh from "./Refresh"
-import styles from './My.module.scss'
+import Bottom from "./Bottom"
+import styles from "./My.module.scss"
 
 const cx = classNames.bind(styles)
 
@@ -24,14 +25,12 @@ const My = () => {
   ]
 
   return (
-    <div className={cx({loading})}>
+    <div className={cx({ loading })}>
       {!address ? (
         <Page>
           <Num title="MIR Price" price>
             {stake.price}
           </Num>
-
-          <Connect />
         </Page>
       ) : (
         <Page>
@@ -53,7 +52,10 @@ const My = () => {
         </Page>
       )}
 
-      <Refresh loading={loading} />
+      <Bottom>
+        {!address && <Connect />}
+        <Refresh loading={loading} />
+      </Bottom>
     </div>
   )
 }
