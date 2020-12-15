@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import classNames from "classnames/bind"
 import { startOfHour } from "date-fns"
-import { gt } from "../libs/math"
+import { SMALLEST } from "../constants"
+import { gte } from "../libs/math"
 import { useWallet } from "../hooks"
 import Page from "../components/Page"
 import useMy from "../pages/My/useMy"
@@ -53,7 +54,7 @@ const My = () => {
 
           {contents.map(
             ({ title, children }) =>
-              gt(children, 0) && (
+              gte(children, SMALLEST) && (
                 <Num title={title} key={children}>
                   {children}
                 </Num>
